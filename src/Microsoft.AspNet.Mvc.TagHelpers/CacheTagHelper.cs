@@ -120,14 +120,13 @@ namespace Microsoft.AspNet.Mvc.TagHelpers
         /// <inheritdoc />
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
-            //Enabled = false;
             TagHelperContent result = null;
             if (Enabled)
             {
                 var key = GenerateKey(context);
                 if (!MemoryCache.TryGetValue(key, out result))
                 {
-                    // Create an EntryLink and flow it so that it is accessible via the ambient
+                    // Create an entry link scope and flow it so that it is accessible via the ambient
                     // EntryLinkHelpers.ContextLink for user code.
                     using (var link = MemoryCache.CreateLinkingScope())
                     {
@@ -135,7 +134,6 @@ namespace Microsoft.AspNet.Mvc.TagHelpers
 
                         MemoryCache.Set(key, result, GetCacheEntryOptions(link));
                     }
-
                 }
             }
 
